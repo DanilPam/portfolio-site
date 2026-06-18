@@ -14,7 +14,9 @@ templates = Jinja2Templates(directory="templates")
 
 JSON_FILE = "projects.json"
 
+
 # --- РАБОТА С JSON ---
+
 def load_projects():
     if not os.path.exists(JSON_FILE):
         return []
@@ -25,9 +27,10 @@ def save_projects(projects):
     with open(JSON_FILE, "w", encoding="utf-8") as f:
         json.dump(projects, f, ensure_ascii=False, indent=4)
 
-# --- ПРОВЕРКА АВТОРИЗАЦИИ ЧЕРЕЗ КУКИ ---
+
+# --- ПРОВЕРКА АВТОРИЗАЦИИ ---
+
 def is_authenticated(request: Request) -> bool:
-    # Проверяем, есть ли у пользователя кука сессии
     return request.cookies.get("session_token") == "active"
 
 
@@ -51,30 +54,25 @@ async def project_page(request: Request, project_id: int):
     )
 
 
-# --- МАРШРУТЫ АВТОРИЗАЦИИ (ЛОГИН / ЛОГАУТ) ---
+# --- АВТОРИЗАЦИЯ (ЛОГИН / ЛОГАУТ) ---
 
-# Отображение красивой формы входа
 @app.get("/admin/login", response_class=HTMLResponse)
 async def login_page(request: Request):
     if is_authenticated(request):
         return RedirectResponse(url="/admin", status_code=status.HTTP_303_SEE_OTHER)
     return templates.TemplateResponse(request=request, name="login.html", context={"error": None})
 
-# Обработка данных формы входа
 @app.post("/admin/login")
 async def login_process(request: Request, username: str = Form(...), password: str = Form(...)):
-    if username == os.getenv("ADMIN_USERNAME") and password == os.getenv("ADMIN_PASSWORD"):  # Ваши данные для входа
+    if username == os.getenv("ADMIN_USERNAME") and password == os.getenv("ADMIN_PASSWORD"):
         response = RedirectResponse(url="/admin", status_code=status.HTTP_303_SEE_OTHER)
-        # Устанавливаем сессионную куку (без параметра max_age/expires она удалится при закрытии браузера)
         response.set_cookie(key="session_token", value="active", httponly=True)
         return response
     
-    # Если данные неверны, возвращаем форму с ошибкой
     return templates.TemplateResponse(
         request=request, name="login.html", context={"error": "Неверный логин или пароль"}
     )
 
-# Принудительный выход из системы (Стирание куки)
 @app.get("/admin/logout")
 async def logout():
     response = RedirectResponse(url="/", status_code=status.HTTP_303_SEE_OTHER)
