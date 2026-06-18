@@ -121,3 +121,10 @@ async def delete_project(request: Request, project_id: int):
     projects = [p for p in projects if p["id"] != project_id]
     save_projects(projects)
     return RedirectResponse(url="/admin", status_code=status.HTTP_303_SEE_OTHER)
+
+
+if __name__ == "__main__":
+    import uvicorn
+    import os
+    port = int(os.getenv("PORT", 7860))
+    uvicorn.run("main:app", host="0.0.0.0", port=port)
