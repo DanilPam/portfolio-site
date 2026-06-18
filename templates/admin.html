@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', path='style.css') }}">
+    <title>Панель управления</title>
+</head>
+<body>
+    <div class="admin-container">
+        <header style="display: flex; justify-content: space-between; align-items: center;">
+            <h1>Панель администратора</h1>
+            <div>
+                <a href="/" class="back-link" style="margin-right: 1.5rem;">На главную сайт →</a>
+                <a href="/admin/logout" class="btn-delete" style="padding: 0.5rem 1rem;">Выйти</a>
+            </div>
+        </header>
+
+        <!-- Форма добавления проекта -->
+        <section class="form-section">
+            <h2>Добавить новый проект</h2>
+            <form action="/admin/add" method="POST">
+                <input type="text" name="title" placeholder="Название проекта" required>
+                <input type="text" name="short_desc" placeholder="Краткое описание" required>
+                <textarea name="full_desc" placeholder="Полное подробное описание проекта" rows="6" required></textarea>
+                <button type="submit" class="btn">Опубликовать проект</button>
+            </form>
+        </section>
+
+        <!-- Список текущих проектов с возможностью удаления -->
+        <section class="list-section">
+            <h2>Текущие проекты</h2>
+            <table>
+                <tr>
+                    <th>Название</th>
+                    <th>Действие</th>
+                </tr>
+                {% for project in projects %}
+                <tr>
+                    <td>{{ project.title }}</td>
+                    <td>
+                        <form action="/admin/delete/{{ project.id }}" method="POST" onsubmit="return confirm('Удалить этот проект?');">
+                            <button type="submit" class="btn-delete">Удалить</button>
+                        </form>
+                        
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </section>
+    </div>
+</body>
+</html>

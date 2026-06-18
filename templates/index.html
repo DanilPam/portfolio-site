@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', path='style.css') }}">
+    <title>Моё Портфолио</title>
+</head>
+<body>
+    <header>
+        <h1>Портфолио</h1>
+        <a href="/admin" class="btn">Войти в Админку</a>
+    </header>
+    
+    <!-- Главный контейнер информации -->
+    <div class="main-info">
+        <!-- Обертка для аватара, чтобы текст не прыгал, если картинка сломалась -->
+        <div class="avatar-wrapper">
+            <img src="{{ url_for('static', path='/images/avatar.jpg') }}" alt="Аватар" class="avatar">
+        </div>
+        
+        <div class="main-information">
+            <h2>Главная информация</h2>
+            <p>Фам.: Пампуха</p>
+            <p>Имя : Данил</p>
+        </div>
+        
+        <div class="about-me">
+            <h2>Обо мне</h2>
+            <p>Привет! Меня зовут Данил, я учусь в школе и уже 4 года <b>самостоятельно развиваюсь в программировании.</b></p>
+            <p>Мой основной стек <b>— Python</b>. Я развиваю свои навыки по созданию бэкэнд-приложения на 
+                <b>FastAPI, Flask и Django</b>, а также имел дело с созданием небольших Telegram-ботов с помощью <b>Aiogram</b>.</p> 
+            <p>Чтобы оживить свои проекты визуально, освоил базу HTML и CSS (этот сайт-портфолио — мой первый шаг).</p>
+            <p>Прямо сейчас активно <b>изучаю C#</b>, чтобы расширить кругозор.</p>
+            <p><i>Я начинаю новый этап — создание чистого, взрослого кода, поэтому <b>это портфолио будет постоянно пополняться моими новыми пет-проектами.</b>
+                Заглядывайте сюда почаще, чтобы следить за моим прогрессом!</i></p>
+        </div>
+    </div>
+
+    <!-- Линия-разделитель -->
+    <hr class="section-divider">
+
+    <!-- Сетка карточек -->
+    <main class="projects-grid">
+        {% for project in projects %}
+        <div class="project-card">
+            <h2>{{ project.title }}</h2>
+            <p>{{ project.short_desc }}</p>
+            <a href="/projects/{{ project.id }}" class="btn-link">Подробнее →</a>
+        </div>
+        {% endfor %}
+        
+        {% if not projects %}
+        <p class="no-projects">Проектов пока нет. Зайдите в админку и добавьте первый!</p>
+        {% endif %}
+    </main>
+</body>
+</html>

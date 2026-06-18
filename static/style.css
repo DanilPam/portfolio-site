@@ -1,0 +1,326 @@
+/* ==========================================================================
+   1. ОБЩИЕ СТИЛИ И ПЕРЕМЕННЫЕ (Глобальные настройки темы)
+   ========================================================================== */
+:root {
+    --bg-color: #0f172a;       /* Глубокий темно-синий фон всего сайта */
+    --card-bg: #1e293b;        /* Цвет фона для карточек и блоков */
+    --text-main: #f8fafc;      /* Основной белый цвет для текста */
+    --text-muted: #94a3b8;     /* Серый цвет для второстепенного текста */
+    --accent: #38bdf8;         /* Голубой акцентный цвет для кнопок и ссылок */
+    --accent-hover: #0ea5e9;   /* Цвет акцента при наведении мыши */
+    --danger: #ef4444;         /* Красный цвет для кнопок удаления */
+    --danger-hover: #dc2626;   /* Цвет удаления при наведении */
+    --border: #334155;         /* Цвет разделительных линий и границ */
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+}
+
+/* Контейнеры для выравнивания контента по центру экрана */
+header, .detail-container, .admin-container {
+    max-width: 1250px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+}
+
+/* ==========================================================================
+   2. КОМПОНЕНТЫ И КНОПКИ (Универсальные элементы интерфейса)
+   ========================================================================== */
+.btn {
+    background-color: var(--accent);
+    color: var(--bg-color);
+    text-decoration: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    display: inline-block;
+}
+
+.btn:hover {
+    background-color: var(--accent-hover);
+}
+
+.back-link {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.back-link:hover {
+    text-decoration: underline;
+}
+
+/* ==========================================================================
+   3. ГЛАВНАЯ СТРАНИЦА (Сетка портфолио с карточками проектов)
+   ========================================================================== */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border, #333); /* Если переменная сломалась, будет серая линия */
+    padding-bottom: 1rem;
+    margin-bottom: 2rem;
+}
+
+/* Контейнер для выстраивания элементов в одну строку */
+.main-info {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 30px;
+    max-width: 1250px;
+    margin: 2rem auto;
+    padding: 0 20px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Фиксируем блок под аватар, чтобы текст не съезжал из-за ошибки загрузки */
+.avatar-wrapper {
+    width: 120px;
+    min-width: 120px;
+    height: 120px;
+    background-color: #222; 
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--border, #333);
+}
+
+.avatar {
+    width: 100%;
+    height: 100%;       /* Вот это свойство заставит её заполнить круг полностью */
+    object-fit: cover;  /* А это свойство не даст ей растянуться или сжаться уродливо */
+}
+
+
+/* Колонки текста */
+.main-information, .about-me {
+    flex: 1;
+    min-width: 200px;
+}
+
+.main-information {
+    max-width: 25%;
+}
+
+.about-me {
+    max-width: 75%;
+}
+
+.main-information h2, .about-me h2 {
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+/* Линия-разделитель */
+.section-divider {
+    border: none;
+    border-bottom: 1px solid var(--border, #333);
+    max-width: 1250px;
+    margin: 2.5rem auto;
+}
+
+/* Сетка проектов */
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+    max-width: 1000px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+.no-projects {
+    grid-column: 1 / -1;
+    color: var(--text-muted, #888);
+}
+
+.project-card {
+    background-color: var(--card-bg, #1a1a1a);
+    padding: 1.5rem;
+    border-radius: 12px;
+    border: 1px solid var(--border, #333);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.project-card h2 {
+    margin-top: 0;
+    color: var(--text-main, #fff);
+    font-size: 1.4rem;
+}
+
+.project-card p {
+    color: var(--text-muted, #888);
+    font-size: 0.95rem;
+    flex-grow: 1;
+    margin-bottom: 1.5rem;
+}
+
+.btn-link {
+    color: var(--accent, #00ffff);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.btn-link:hover {
+    color: var(--accent-hover, #00cccc);
+}
+
+
+
+/* ==========================================================================
+   4. СТРАНИЦА ДЕТАЛЬНОГО ОПИСАНИЯ ПРОЕКТА
+   ========================================================================== */
+.detail-container {
+    max-width: 700px;
+    margin-top: 3rem;
+}
+
+.content {
+    background-color: var(--card-bg);
+    padding: 2rem;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    margin-top: 1.5rem;
+}
+
+.meta-desc {
+    color: var(--accent);
+    font-size: 1.1rem;
+}
+
+hr {
+    border: 0;
+    border-top: 1px solid var(--border);
+    margin: 1.5rem 0;
+}
+
+.full-text {
+    font-size: 1.1rem;
+    color: #e2e8f0;
+    white-space: pre-line; /* Сохраняет переносы строк, введенные в textarea */
+}
+
+/* ==========================================================================
+   5. ПАНЕЛЬ АДМИНИСТРАТОРА (Форма ввода и таблица управления)
+   ========================================================================== */
+.form-section, .list-section {
+    background-color: var(--card-bg);
+    padding: 2rem;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    margin-bottom: 2rem;
+}
+
+/* Стилизация полей ввода формы */
+form input[type="text"], 
+form input[type="password"], 
+form textarea {
+    width: 100%;
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+    background-color: var(--bg-color);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text-main);
+    font-family: inherit;
+    box-sizing: border-box;
+}
+
+form input[type="text"]:focus, 
+form input[type="password"]:focus, 
+form textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+}
+
+/* Таблица управления проектами */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+th, td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+}
+
+th {
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+.btn-delete {
+    color: var(--danger);
+    text-decoration: none;
+    font-weight: 600;
+    padding: 0.4rem 0.8rem;
+    border: 1px solid var(--danger);
+    border-radius: 6px;
+    transition: all 0.2s;
+}
+
+.btn-delete:hover {
+    background-color: var(--danger);
+    color: var(--text-main);
+}
+
+
+/* ==========================================================================
+   6. СТИЛИ ДЛЯ КРАСИВОЙ СТРАНИЦЫ ВХОДА (LOGIN)
+   ========================================================================== */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.login-form {
+    background-color: var(--card-bg);
+    padding: 2.5rem;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+}
+
+.login-form h2 {
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.login-form .btn {
+    width: 100%;
+    margin-top: 0.5rem;
+}
+
+.error-msg {
+    color: var(--danger);
+    background-color: rgba(239, 68, 68, 0.1);
+    padding: 0.75rem;
+    border-radius: 6px;
+    border: 1px solid var(--danger);
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+    text-align: center;
+}

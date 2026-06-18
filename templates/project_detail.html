@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', path='style.css') }}">
+    <title>{{ project.title }}</title>
+</head>
+<body>
+    <div class="detail-container">
+        <a href="/" class="back-link">← Назад на главную</a>
+        <h1>{{ project.title }}</h1>
+        <div class="content">
+            <p class="meta-desc"><strong>Кратко:</strong> {{ project.short_desc }}</p>
+            <hr>
+            <pre class="full-text">{{ project.full_desc }}</pre>
+        </div>
+    </div>
+</body>
+</html>
